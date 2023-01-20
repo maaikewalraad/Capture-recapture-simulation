@@ -19,11 +19,6 @@ for (i in 1:length(dt_list)){
   # LP (CRC)
   LP = sum(D$n1) * sum(D$n2) / sum(D$n1 * D$n2)
   
-  # print(years[i])
-  # print(c(TDsurv, TDsurvRef, TDsurvXRef, TDlpRef))
-  # print((TDsurvXRef - TDsurvRef) / TDsurvRef)
-  # print((TDlpRef - TDsurvRef) / TDsurvRef)
-  
   # Table of estimated sample totals (per year)
   output <- data.table(Estimator = c("Reference", "Lincoln-Peterson"),
                        Estimate = c(ref, LP),
@@ -34,7 +29,7 @@ for (i in 1:length(dt_list)){
   
   est[[i]] <- output
   
-  # rm(list=setdiff(ls(), c("est", "est_table", "years")))
+  # rm(list=setdiff(ls(), c("est")))
   
 }
 
@@ -43,8 +38,7 @@ for (i in 1:length(dt_list)){
 est <- do.call(rbind, est) 
 est$Estimator <- factor(est$Estimator, 
                         levels = unique(est$Estimator))
-# 1. Plot D-estimates standardized by sample size
-
+# Plot population estimates
 ggplot(est, aes(x = Dependency, y = Estimate, group = Estimator, colour = Estimator)) + 
   geom_line(cex = 0.5) + 
   geom_point(cex = 1.5) +

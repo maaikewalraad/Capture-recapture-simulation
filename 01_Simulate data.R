@@ -14,8 +14,7 @@ crc_data <- function(n1, list_cor) {
   }
   dt <- data.table()
   dt[, n1 := c(rep(1, n1*0.9), rep(0, n1*0.1))]
-  # Data simulation should be (partly) based on actual ratio (see below)
-  av_rec <- 0.42 # around 42% gets recaptured from the first sample (theory-based)
+  av_rec <- 0.42 # around 42% gets recaptured from the first sample (based on Markup manuscript)
   rec_rate <- av_rec + I(rnorm(1) / 100) # Add noise to this,  /100 because the recapture rate is in percentages 
   ratio_n2 <- rec_rate + list_cor*rec_rate # Dependency determines ratio {0/1} which also determines amount of n_11
   n_10 <- round((1-ratio_n2)*n1)
@@ -41,7 +40,6 @@ for (i in 1:length(sample_dependencies)) {
   dt <- as.data.table(dt)
   dt[, Dependency := sample_dependencies[i]]
   dt_list[[i]] <- dt
-  
   
 }
 
